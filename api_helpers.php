@@ -1,4 +1,12 @@
 <?php
+// Configuração local opcional para hospedagens compartilhadas.
+// O arquivo config.local.php não é versionado e deve permanecer bloqueado pelo .htaccess.
+$configLocal = __DIR__ . '/config.local.php';
+if (is_file($configLocal)) {
+    require_once $configLocal;
+}
+unset($configLocal);
+
 function responder($dados, $status = 200) {
     http_response_code($status);
     header('Content-Type: application/json; charset=UTF-8');

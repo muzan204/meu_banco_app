@@ -6,11 +6,10 @@ Este projeto usa PHP, sessões e MySQL. A hospedagem gratuita InfinityFree ofere
 
 1. Crie sua conta no site oficial: https://www.infinityfree.com/
 2. No painel, crie uma conta de hospedagem e escolha um subdomínio gratuito.
-3. Anote o endereço FTP, o usuário FTP e a senha FTP. Não publique esses dados nem os envie em mensagens.
-4. No painel da hospedagem, crie um banco MySQL e anote host, nome, usuário e senha do banco.
-5. Abra o phpMyAdmin da hospedagem e importe o arquivo `setup.sql` deste repositório. O arquivo SQL não deve ser enviado para a pasta pública do site.
+3. No painel da hospedagem, crie um banco MySQL e anote host, nome, usuário e senha do banco.
+4. Abra o phpMyAdmin da hospedagem e importe o arquivo `setup.sql` deste repositório. O arquivo SQL não deve ser enviado para a pasta pública do site.
 
-## 2. Configurar os segredos do PHP
+## 2. Preparar a configuração privada
 
 A aplicação lê variáveis de ambiente. Em hospedagem compartilhada sem configuração de variáveis pelo painel, use o arquivo local `config.local.php`:
 
@@ -38,7 +37,7 @@ foreach ($settings as $key => $value) {
 unset($settings, $key, $value);
 ```
 
-O arquivo `config.local.php` é carregado automaticamente pelo projeto, é ignorado pelo deploy e é bloqueado para acesso HTTP pelo `.htaccess`. Não o adicione ao GitHub.
+O arquivo `config.local.php` é carregado automaticamente pelo projeto, não deve ser enviado ao GitHub e é bloqueado para acesso HTTP pelo `.htaccess`.
 
 ### Gerar o hash da senha do administrador
 
@@ -50,22 +49,16 @@ php -r "echo password_hash('SUA_SENHA_FORTE', PASSWORD_DEFAULT), PHP_EOL;"
 
 Copie apenas o hash gerado para `ADMIN_PASSWORD_HASH`. Não coloque a senha em texto puro no código, no GitHub ou nesta conversa. Escolha uma senha única e guarde-a em local seguro.
 
-## 3. Configurar o deploy pelo GitHub Actions
+## 3. Enviar os arquivos do site
 
-No GitHub, abra o repositório **Settings → Secrets and variables → Actions → New repository secret** e crie:
+1. Abra o Gerenciador de Arquivos no painel da hospedagem.
+2. Entre na pasta `htdocs`.
+3. Envie os arquivos do projeto que fazem parte do site: arquivos PHP, HTML, CSS, JavaScript e pastas de recursos utilizados pela interface.
+4. Envie também o arquivo `.htaccess` para `htdocs`. Ele desativa a listagem de diretórios e bloqueia arquivos sensíveis.
+5. Não envie `setup.sql`, `.env.example`, README, arquivos de documentação, a pasta `.github` ou qualquer arquivo que contenha credenciais.
+6. Crie `config.local.php` manualmente conforme a seção anterior.
 
-- `FTP_SERVER`: endereço FTP mostrado no painel da hospedagem.
-- `FTP_USERNAME`: usuário FTP mostrado no painel.
-- `FTP_PASSWORD`: senha FTP.
-
-Depois:
-
-1. Confirme que `config.local.php` foi criado manualmente em `htdocs`.
-2. Abra **Actions → Deploy PHP site (manual) → Run workflow**.
-3. Execute o workflow da branch `main`.
-4. Confira se o job terminou com sucesso e abra o subdomínio usando HTTPS.
-
-O workflow envia os arquivos do site para `/htdocs/`, mas exclui arquivos SQL, Markdown, arquivos de ambiente, configurações locais e a pasta do GitHub. Se o painel mostrar um diretório remoto diferente, ajuste `server-dir` em `.github/workflows/deploy-ftp.yml` antes de executar.
+Use o Gerenciador de Arquivos do próprio painel para a publicação. Não coloque credenciais de hospedagem em arquivos do repositório.
 
 ## 4. Verificações obrigatórias antes de usar
 
@@ -76,4 +69,4 @@ O workflow envia os arquivos do site para `/htdocs/`, mas exclui arquivos SQL, M
 - Verifique que páginas e endpoints administrativos exigem login.
 - Faça backup do banco pelo phpMyAdmin antes de alterações importantes.
 
-A hospedagem gratuita pode suspender ou limitar sites que ultrapassem suas regras de uso. O deploy não é considerado concluído até que o banco seja importado, os segredos sejam configurados e os testes acima passem.
+A hospedagem gratuita pode suspender ou limitar sites que ultrapassem suas regras de uso. A publicação não é considerada concluída até que o banco seja importado, a configuração privada esteja correta e os testes acima passem.

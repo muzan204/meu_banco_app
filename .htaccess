@@ -1,6 +1,6 @@
 Options -Indexes
 
 # Bloqueia arquivos de configuração, código-fonte auxiliar e dumps SQL.
-<FilesMatch "(^\\.|\\.(sql|md|log|ini|bak|dist)$|^config\\.local\\.php$)">
+<FilesMatch "(^\.|\.(sql|md|log|ini|bak|dist)$|^config\.local\.php$)">
     Require all denied
 </FilesMatch>

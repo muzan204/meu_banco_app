@@ -33,15 +33,37 @@ function iniciarSessaoSegura() {
 }
 function exigirOrigemMesmoSite() {
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-    if ($origin !== '') {
-        $originHost = parse_url($origin, PHP_URL_HOST);
-        $requestHost = strtolower(explode(':', $_SERVER['HTTP_HOST'] ?? '')[0]);
-        if (!$originHost || strtolower($originHost) !== $requestHost) {
-            responder(['erro' => 'Origem da requisição não permitida.'], 403);
+    $fetchSite = strtolower($_SERVER['HTTP_SEC_FETCH_SITE'] ?? '');
+    if ($origin === '') {
+        if ($fetchSite !== 'same-origin') {
+            responder(['erro' => 'Origem da requisição não confirmada.'], 403);
         }
+        return;
     }
-    if (($_SERVER['HTTP_SEC_FETCH_SITE'] ?? '') === 'cross-site') {
-        responder(['erro' => 'Requisição entre sites não permitida.'], 403);
+
+    $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+    $schemeEsperado = $https ? 'https' : 'http';
+    $hostCabecalho = $_SERVER['HTTP_HOST'] ?? '';
+    $hostEsperado = parse_url('http://' . $hostCabecalho, PHP_URL_HOST);
+    $portaEsperada = parse_url('http://' . $hostCabecalho, PHP_URL_PORT);
+    $partesOrigin = parse_url($origin);
+
+    if (!is_array($partesOrigin)
+        || !isset($partesOrigin['scheme'], $partesOrigin['host'])
+        || isset($partesOrigin['user']) || isset($partesOrigin['pass'])
+        || isset($partesOrigin['path']) && $partesOrigin['path'] !== ''
+        || isset($partesOrigin['query']) || isset($partesOrigin['fragment'])) {
+        responder(['erro' => 'Origem da requisição não permitida.'], 403);
+    }
+
+    $portaOrigin = $partesOrigin['port'] ?? (strtolower($partesOrigin['scheme']) === 'https' ? 443 : 80);
+    $portaRequest = $portaEsperada ?? ($https ? 443 : 80);
+    if (strtolower($partesOrigin['scheme']) !== $schemeEsperado
+        || strtolower($partesOrigin['host']) !== strtolower((string)$hostEsperado)
+        || $portaOrigin !== $portaRequest
+        || $fetchSite === 'cross-site') {
+        responder(['erro' => 'Origem da requisição não permitida.'], 403);
     }
 }
 function exigirAdministrador() {

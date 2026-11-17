@@ -6,6 +6,7 @@ Painel administrativo para gerenciamento de clientes, produtos, estoque e pedido
 - Dashboard com indicadores operacionais.
 - Cadastro, consulta, edição e exclusão de clientes e produtos.
 - Pedidos com itens, cálculo de total e movimentação de estoque em transação.
+- Cancelamento e reativação de pedidos.
 - Exportações CSV no navegador.
 - Login de administrador com sessão PHP e proteção CSRF.
 
@@ -38,7 +39,7 @@ Cadastre o resultado como variável no servidor. Não publique o arquivo `.env` 
 - Sessão PHP com cookie HttpOnly, SameSite=Strict e Secure quando HTTPS está ativo.
 - Expiração por inatividade após 30 minutos e renovação periódica do identificador.
 - Autenticação obrigatória em todo endpoint que inclui a conexão com o banco; isso protege listagens, dashboard e operações de escrita.
-- Token CSRF obrigatório em requisições mutáveis e verificação de origem.
+- Token CSRF obrigatório em requisições mutáveis e validação de origem incluindo esquema, host e porta.
 - Respostas de autenticação e dados sem cache.
 
 ## Publicação

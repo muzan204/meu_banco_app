@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Clientes | Meraky Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span
+                    class="brand-mark">M</span><span><b>Meraky</b><small>Admin</small></span></a>
+            <nav class="nav"><a class="nav-link " href="index.html"><span>⌂</span>Dashboard</a><a
+                    class="nav-link active" href="clientes.html"><span>◉</span>Clientes</a><a class="nav-link "
+                    href="produtos.html"><span>◇</span>Produtos</a><a class="nav-link "
+                    href="pedidos.html"><span>▣</span>Pedidos</a></nav>
+            <div class="db-card"><span class="pulse"></span>
+                <div><b>XAMPP + MySQL</b><small>Conexão local</small></div>
+            </div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <div><button class="menu-btn" id="menuBtn">☰</button>
+                    <p class="eyebrow">Cadastros</p>
+                    <h1>Clientes</h1>
+                    <p class="muted">Gerencie os clientes conectados ao seu banco MySQL.</p>
+                </div><button class="primary-btn" id="abrirModal">+ Novo cliente</button>
+            </header>
+            <section class="stats-grid three">
+                <article class="stat"><span>Total de clientes</span><strong
+                        id="totalClientes">0</strong><small>cadastros ativos</small></article>
+                <article class="stat"><span>Cadastros hoje</span><strong id="clientesHoje">0</strong><small>novos
+                        hoje</small></article>
+                <article class="stat success"><span>Banco de dados</span><strong>Online</strong><small>XAMPP /
+                        MySQL</small></article>
+            </section>
+            <section class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Clientes cadastrados</h2>
+                        <p class="muted">Pesquise, edite ou remova registros.</p>
+                    </div><button class="ghost-btn" id="btnAtualizar">Atualizar</button>
+                </div>
+                <div class="toolbar"><label class="search"><span>⌕</span><input id="pesquisa"
+                            placeholder="Buscar por nome, e-mail ou telefone"></label><button class="ghost-btn"
+                        id="exportarClientes">Exportar CSV</button></div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>E-mail</th>
+                                <th>Telefone</th>
+                                <th>Cadastro</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaClientes">
+                            <tr>
+                                <td colspan="6" class="empty">Carregando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div class="modal-overlay" id="modal">
+        <section class="modal">
+            <header>
+                <div>
+                    <p class="eyebrow">Cliente</p>
+                    <h2 id="tituloModal">Novo cliente</h2>
+                </div><button class="icon-btn" id="fecharModal" type="button">×</button>
+            </header>
+            <form id="formCliente"><input type="hidden" id="clienteId"><label class="field"><span>Nome
+                        completo</span><input id="nome" required maxlength="120"
+                        placeholder="Ex.: Gustavo Belchior"></label><label class="field"><span>E-mail</span><input
+                        id="email" type="email" required maxlength="160" placeholder="nome@email.com"></label><label
+                    class="field"><span>Telefone</span><input id="telefone" maxlength="15"
+                        placeholder="(11) 99999-9999"></label>
+                <p class="form-message" id="mensagem"></p>
+                <div class="modal-actions"><button type="button" class="secondary-btn"
+                        id="cancelarModal">Cancelar</button><button class="primary-btn"
+                        id="btnSalvar">Cadastrar</button></div>
+            </form>
+        </section>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script src="clientes.js"></script>
+</body>
+
+</html>

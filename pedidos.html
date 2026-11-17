@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Pedidos | Meraky Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span
+                    class="brand-mark">M</span><span><b>Meraky</b><small>Admin</small></span></a>
+            <nav class="nav"><a class="nav-link " href="index.html"><span>⌂</span>Dashboard</a><a class="nav-link "
+                    href="clientes.html"><span>◉</span>Clientes</a><a class="nav-link "
+                    href="produtos.html"><span>◇</span>Produtos</a><a class="nav-link active"
+                    href="pedidos.html"><span>▣</span>Pedidos</a></nav>
+            <div class="db-card"><span class="pulse"></span>
+                <div><b>XAMPP + MySQL</b><small>Conexão local</small></div>
+            </div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <div><button class="menu-btn" id="menuBtn">☰</button>
+                    <p class="eyebrow">Vendas</p>
+                    <h1>Pedidos</h1>
+                    <p class="muted">Crie pedidos relacionando clientes e produtos.</p>
+                </div><button class="primary-btn" id="abrirModalPedido">+ Novo pedido</button>
+            </header>
+            <section class="stats-grid three">
+                <article class="stat"><span>Total de pedidos</span><strong id="totalPedidos">0</strong><small>pedidos
+                        registrados</small></article>
+                <article class="stat"><span>Pendentes</span><strong id="pedidosPendentes">0</strong><small>aguardando
+                        andamento</small></article>
+                <article class="stat accent"><span>Valor total</span><strong id="valorPedidos">R$
+                        0,00</strong><small>todos os pedidos</small></article>
+            </section>
+            <section class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Pedidos registrados</h2>
+                        <p class="muted">Acompanhe cliente, itens, total e status.</p>
+                    </div><button class="ghost-btn" id="btnAtualizarPedidos">Atualizar</button>
+                </div>
+                <div class="toolbar"><label class="search"><span>⌕</span><input id="pesquisaPedido"
+                            placeholder="Buscar cliente ou número do pedido"></label>
+                    <div class="toolbar-actions"><select id="filtroStatus" class="select">
+                            <option value="">Todos os status</option>
+                            <option>Pendente</option>
+                            <option>Pago</option>
+                            <option>Enviado</option>
+                            <option>Concluído</option>
+                            <option>Cancelado</option>
+                        </select><button class="ghost-btn" id="exportarPedidos">Exportar CSV</button></div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pedido</th>
+                                <th>Cliente</th>
+                                <th>Itens</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Data</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaPedidos">
+                            <tr>
+                                <td colspan="7" class="empty">Carregando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div class="modal-overlay" id="modalPedido">
+        <section class="modal wide">
+            <header>
+                <div>
+                    <p class="eyebrow">Novo pedido</p>
+                    <h2>Montar pedido</h2>
+                </div><button class="icon-btn" id="fecharModalPedido" type="button">×</button>
+            </header>
+            <form id="formPedido"><label class="field"><span>Cliente</span><select id="clientePedido" class="select"
+                        required>
+                        <option value="">Selecione um cliente</option>
+                    </select></label>
+                <div class="items-head">
+                    <div>
+                        <h3>Produtos</h3>
+                        <p class="muted">Adicione um ou mais itens.</p>
+                    </div><button type="button" class="secondary-btn" id="adicionarItem">+ Adicionar item</button>
+                </div>
+                <div id="itensPedido" class="order-items"></div>
+                <div class="order-total"><span>Total estimado</span><strong id="totalPedido">R$ 0,00</strong></div>
+                <p class="form-message" id="mensagemPedido"></p>
+                <div class="modal-actions"><button type="button" class="secondary-btn"
+                        id="cancelarPedido">Cancelar</button><button class="primary-btn" id="btnSalvarPedido">Criar
+                        pedido</button></div>
+            </form>
+        </section>
+    </div>
+    <div class="toast" id="toastPedido"></div>
+    <script src="pedidos.js"></script>
+</body>
+
+</html>

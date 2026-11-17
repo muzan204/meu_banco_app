@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Painel administrativo Meraky conectado ao MySQL."
+  >
+
+  <title>Dashboard | Meraky Admin</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+    >
+
+      <a
+        class="brand"
+        href="index.html"
+      >
+
+        <span class="brand-mark">
+          M
+        </span>
+
+        <span>
+          <b>Meraky</b>
+          <small>Admin</small>
+        </span>
+
+      </a>
+
+      <nav class="nav">
+
+        <a
+          class="nav-link active"
+          href="index.html"
+        >
+          <span>⌂</span>
+          Dashboard
+        </a>
+
+        <a
+          class="nav-link"
+          href="clientes.html"
+        >
+          <span>◉</span>
+          Clientes
+        </a>
+
+        <a
+          class="nav-link"
+          href="produtos.html"
+        >
+          <span>◇</span>
+          Produtos
+        </a>
+
+        <a
+          class="nav-link"
+          href="pedidos.html"
+        >
+          <span>▣</span>
+          Pedidos
+        </a>
+
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+
+      <div class="db-card">
+
+        <span class="pulse"></span>
+
+        <div>
+          <b>Sistema Online</b>
+
+          <small>
+            XAMPP + MySQL
+          </small>
+        </div>
+
+      </div>
+
+      <div class="sidebar-version">
+        Meraky Admin v2.1
+      </div>
+
+    </aside>
+
+
+    <!-- CONTEÚDO -->
+
+    <main class="main">
+
+      <!-- HEADER -->
+
+      <header class="topbar">
+
+        <div class="topbar-title">
+
+          <button
+            class="menu-btn"
+            id="menuBtn"
+            aria-label="Abrir menu"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <p class="eyebrow">
+              Visão geral
+            </p>
+
+            <h1>
+              Dashboard
+            </h1>
+
+            <p class="muted">
+              Resumo do seu banco relacional em tempo real.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+          <div class="sync-info">
+
+            <span class="sync-dot"></span>
+
+            <div>
+              <small>
+                Última atualização
+              </small>
+
+              <strong id="ultimaAtualizacao">
+                —
+              </strong>
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            class="ghost-btn"
+            id="btnAtualizarDashboard"
+          >
+            ↻ Atualizar
+          </button>
+
+          <a
+            class="primary-btn"
+            href="pedidos.html"
+          >
+            + Novo pedido
+          </a>
+
+        </div>
+
+      </header>
+
+
+      <!-- ESTATÍSTICAS PRINCIPAIS -->
+
+      <section class="stats-grid dashboard-stats">
+
+        <article class="stat">
+
+          <div class="stat-top">
+
+            <span>
+              Clientes
+            </span>
+
+            <span class="stat-icon">
+              ◉
+            </span>
+
+          </div>
+
+          <strong id="statClientes">
+            —
+          </strong>
+
+          <small>
+            registros cadastrados
+          </small>
+
+        </article>
+
+
+        <article class="stat">
+
+          <div class="stat-top">
+
+            <span>
+              Produtos
+            </span>
+
+            <span class="stat-icon">
+              ◇
+            </span>
+
+          </div>
+
+          <strong id="statProdutos">
+            —
+          </strong>
+
+          <small>
+            itens no catálogo
+          </small>
+
+        </article>
+
+
+        <article class="stat">
+
+          <div class="stat-top">
+
+            <span>
+              Pedidos
+            </span>
+
+            <span class="stat-icon">
+              ▣
+            </span>
+
+          </div>
+
+          <strong id="statPedidos">
+            —
+          </strong>
+
+          <small>
+            <b id="statPedidosHoje">
+              —
+            </b>
+            criados hoje
+          </small>
+
+        </article>
+
+
+        <article class="stat accent">
+
+          <div class="stat-top">
+
+            <span>
+              Faturamento confirmado
+            </span>
+
+            <span class="stat-icon">
+              R$
+            </span>
+
+          </div>
+
+          <strong id="statFaturamento">
+            R$ —
+          </strong>
+
+          <small>
+            pagos, enviados e concluídos
+          </small>
+
+        </article>
+
+
+        <article class="stat">
+
+          <div class="stat-top">
+
+            <span>
+              Ticket médio
+            </span>
+
+            <span class="stat-icon">
+              ↗
+            </span>
+
+          </div>
+
+          <strong id="statTicket">
+            R$ —
+          </strong>
+
+          <small>
+            média dos pedidos confirmados
+          </small>
+
+        </article>
+
+
+        <article class="stat">
+
+          <div class="stat-top">
+
+            <span>
+              Valor em estoque
+            </span>
+
+            <span class="stat-icon">
+              $
+            </span>
+
+          </div>
+
+          <strong id="statValorEstoque">
+            R$ —
+          </strong>
+
+          <small>
+            preço × quantidade disponível
+          </small>
+
+        </article>
+
+      </section>
+
+
+      <!-- RESUMO DE STATUS -->
+
+      <section class="status-summary">
+
+        <article class="status-card">
+
+          <span class="status-dot pendente"></span>
+
+          <div>
+            <small>Pendentes</small>
+            <strong id="statusPendente">
+              0
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="status-card">
+
+          <span class="status-dot pago"></span>
+
+          <div>
+            <small>Pagos</small>
+            <strong id="statusPago">
+              0
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="status-card">
+
+          <span class="status-dot enviado"></span>
+
+          <div>
+            <small>Enviados</small>
+            <strong id="statusEnviado">
+              0
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="status-card">
+
+          <span class="status-dot concluido"></span>
+
+          <div>
+            <small>Concluídos</small>
+            <strong id="statusConcluido">
+              0
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="status-card">
+
+          <span class="status-dot cancelado"></span>
+
+          <div>
+            <small>Cancelados</small>
+            <strong id="statusCancelado">
+              0
+            </strong>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- CONTEÚDO PRINCIPAL -->
+
+      <section class="grid-2 dashboard-grid">
+
+        <!-- ÚLTIMOS PEDIDOS -->
+
+        <article class="panel">
+
+          <div class="panel-head">
+
+            <div>
+
+              <p class="eyebrow">
+                Operação
+              </p>
+
+              <h2>
+                Últimos pedidos
+              </h2>
+
+              <p class="muted panel-description">
+                Pedidos mais recentes registrados no sistema.
+              </p>
+
+            </div>
+
+            <a
+              class="ghost-btn"
+              href="pedidos.html"
+            >
+              Ver todos
+            </a>
+
+          </div>
+
+          <div
+            id="ultimosPedidos"
+            class="activity"
+          >
+
+            <div class="empty">
+              Carregando...
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ESTOQUE -->
+
+        <article class="panel">
+
+          <div class="panel-head">
+
+            <div>
+
+              <p class="eyebrow">
+                Atenção
+              </p>
+
+              <h2>
+                Estoque
+              </h2>
+
+              <p class="muted panel-description">
+                Produtos que precisam de atenção.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="stock-highlight">
+
+            <div class="stock-number">
+
+              <span>
+                Produtos com estoque baixo
+              </span>
+
+              <strong id="statBaixo">
+                —
+              </strong>
+
+            </div>
+
+            <p>
+              Itens com 5 unidades ou menos merecem reposição.
+            </p>
+
+            <div
+              id="listaEstoqueBaixo"
+              class="stock-list"
+            ></div>
+
+            <a
+              href="produtos.html"
+              class="primary-btn full"
+            >
+              Gerenciar produtos
+            </a>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- AÇÕES RÁPIDAS -->
+
+      <section class="panel quick-panel">
+
+        <div class="panel-head">
+
+          <div>
+
+            <p class="eyebrow">
+              Acesso rápido
+            </p>
+
+            <h2>
+              Gerenciamento
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+          <a
+            href="clientes.html"
+            class="quick-action"
+          >
+
+            <span class="quick-icon">
+              ◉
+            </span>
+
+            <div>
+              <strong>
+                Clientes
+              </strong>
+
+              <small>
+                Cadastrar e editar clientes
+              </small>
+            </div>
+
+          </a>
+
+
+          <a
+            href="produtos.html"
+            class="quick-action"
+          >
+
+            <span class="quick-icon">
+              ◇
+            </span>
+
+            <div>
+              <strong>
+                Produtos
+              </strong>
+
+              <small>
+                Gerenciar catálogo e estoque
+              </small>
+            </div>
+
+          </a>
+
+
+          <a
+            href="pedidos.html"
+            class="quick-action"
+          >
+
+            <span class="quick-icon">
+              ▣
+            </span>
+
+            <div>
+              <strong>
+                Pedidos
+              </strong>
+
+              <small>
+                Criar e acompanhar pedidos
+              </small>
+            </div>
+
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <footer class="dashboard-footer">
+
+        <span>
+          Meraky Admin
+        </span>
+
+        <span>
+          Conectado ao banco MySQL
+        </span>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+  <script src="dashboard.js"></script>
+
+</body>
+</html>
